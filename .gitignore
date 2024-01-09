@@ -20,3 +20,6 @@ build/
 # Ignore OS-specific files
 .DS_Store
 Thumbs.db
+
+# Ignore private files
+server.js

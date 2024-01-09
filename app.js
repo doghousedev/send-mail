@@ -59,9 +59,12 @@ document.getElementById('email-form').addEventListener('submit', async event => 
         if (!response.ok) {
             throw new Error('Email sending failed');
         }
-        alert('Email sent successfully');
+        //alert('Email sent successfully');
+        new Notyf().success('Email sent successfully');
+
     } catch (error) {
         console.error('Error:', error);
-        alert('Failed to send email. Please try again.');
+        //alert('Failed to send email. Please try again.');
+        new Notyf().error('Failed to send email. Please try again.');
     }
 });

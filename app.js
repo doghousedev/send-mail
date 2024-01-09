@@ -9,7 +9,7 @@ document.getElementById('email-form').addEventListener('submit', async event => 
         reader.onerror = error => reject(error);
     });
 
-// Get content type based on file extension
+    // Get content type based on file extension
     const getContentType = (filename) => {
         const extension = filename.split('.').pop().toLowerCase();
         switch (extension) {
@@ -41,11 +41,29 @@ document.getElementById('email-form').addEventListener('submit', async event => 
         emailData.base64Attachments.push({
             Filename: attachment.name,
             Content: base64Attachment,
-            ContentType: getContentType(attachment.name) 
+            ContentType: getContentType(attachment.name)
         });
     }
 
-    console.log('Sending email...',emailData);
+    console.log('Sending email...', emailData);
+
+    const notyf = new Notyf({
+        types: [
+            {
+                type: 'info',
+                background: 'blue',
+                icon: false
+            }
+        ]
+    });
+
+    let notificationsStack = [];
+
+    // Open a new notification
+    notificationsStack.push(notyf.open({
+        type: 'info',
+        message: 'Sending <b>email</b>.....'
+    }));
 
     try {
         const response = await fetch('https://us-central1-net-av-mailer.cloudfunctions.net/net-av-mailer-gmail', {
@@ -59,12 +77,22 @@ document.getElementById('email-form').addEventListener('submit', async event => 
         if (!response.ok) {
             throw new Error('Email sending failed');
         }
-        //alert('Email sent successfully');
-        new Notyf().success('Email sent successfully');
-
+        notificationsStack.push(notyf.success('Email sent successfully'));
     } catch (error) {
         console.error('Error:', error);
-        //alert('Failed to send email. Please try again.');
-        new Notyf().error('Failed to send email. Please try again.');
+        notificationsStack.push(notyf.error('Failed to send email. Please try again.'));
     }
+
+    // Function to dismiss notifications with delay
+    function dismissNotificationsWithDelay() {
+        if (notificationsStack.length > 0) {
+            const notificationToDismiss = notificationsStack.pop();
+            notyf.dismiss(notificationToDismiss);
+
+            setTimeout(dismissNotificationsWithDelay, 1000); // Delay of 1 second
+        }
+    }
+
+    // Start dismissing notifications with delay
+    setTimeout(dismissNotificationsWithDelay, 1000);
 });

@@ -15,17 +15,32 @@
         <div class="heading">Send Email</div>
         <div class="subheading">Powered by Google & MailJet</div>
         <form id="email-form">
+            <label for="sender">Sender's Email:</label>
             <input type="email" id="sender" placeholder="Sender's Email" required value="rmbaylin@net-av.com">
+
+            <label for="senderName">Sender's Name:</label>
             <input type="text" id="senderName" placeholder="Sender's Name" required value="Ronald Baylin">
+
+            <label for="recipient">Recipient's Email:</label>
             <input type="email" id="recipient" placeholder="Recipient's Email" required value="doghousedev@gmail.com">
+
+            <label for="recipientName">Recipient's Name:</label>
             <input type="text" id="recipientName" placeholder="Recipient's Name" required value="Ron Baylin">
+
+            <label for="subject">Subject:</label>
             <input type="text" id="subject" placeholder="Subject" required value="Email Server Test">
+
+            <label for="body">Email Body:</label>
             <textarea id="body" placeholder="Email Body" required>Lorem ipsum dolor sit amet...</textarea>
+
+            <label for="attachments">Attachment:</label>
             <input type="file" id="attachments" placeholder="Attachment">
+
             <button type="submit">Send Email</button>
         </form>
     </div>
-    <script src="app.js"></script>
+    <script src="app_es6.js"></script>
 </body>
+
 
 </html>
